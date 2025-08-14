@@ -19,18 +19,18 @@ func startRepl(cfg *config) {
 			continue
 		}
 		commandName := words[0]
-		if commandName == "explore" && len(words) < 2 {
-			fmt.Printf("need the location name")
+		if (commandName == "explore" || commandName == "catch") && len(words) < 2 {
+			fmt.Printf("need more input")
 			continue
 		}
-		location := ""
-		if commandName == "explore" {
-			location = words[1]
+		input := ""
+		if commandName == "explore" || commandName == "catch" {
+			input = words[1]
 		}
 
 		command, exists := getCommands()[commandName]
 		if exists {
-			err := command.callback(cfg, location)
+			err := command.callback(cfg, input)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -51,7 +51,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(cfg *config, location string) error
+	callback    func(cfg *config, input string) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -80,6 +80,11 @@ func getCommands() map[string]cliCommand {
 			name:        "explore",
 			description: "list pokemons in the location-area",
 			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch",
+			description: "attempt to catch a pokemon",
+			callback:    commandCatch,
 		},
 	}
 }
