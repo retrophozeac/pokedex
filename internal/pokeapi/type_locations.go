@@ -345,3 +345,7 @@ type Pokemon struct {
 	} `json:"types"`
 	Weight int `json:"weight"`
 }
+
+func NewPokedex() map[string]Pokemon {
+	return map[string]Pokemon{}
+}

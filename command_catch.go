@@ -16,6 +16,7 @@ func commandCatch(cfg *config, pokemon string) error {
 	caught := catchPokemon(base_exp, 608)
 	if caught {
 		fmt.Printf("%v was caught!\n", pokemon)
+		cfg.pokedex[pokemon] = pokemons
 	} else {
 		fmt.Printf("%v escaped!\n", pokemon)
 	}

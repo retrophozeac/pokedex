@@ -19,12 +19,12 @@ func startRepl(cfg *config) {
 			continue
 		}
 		commandName := words[0]
-		if (commandName == "explore" || commandName == "catch") && len(words) < 2 {
+		if (commandName == "explore" || commandName == "catch" || commandName == "inspect") && len(words) < 2 {
 			fmt.Printf("need more input")
 			continue
 		}
 		input := ""
-		if commandName == "explore" || commandName == "catch" {
+		if commandName == "explore" || commandName == "catch" || commandName == "inspect" {
 			input = words[1]
 		}
 
@@ -86,10 +86,16 @@ func getCommands() map[string]cliCommand {
 			description: "attempt to catch a pokemon",
 			callback:    commandCatch,
 		},
+		"inspect": {
+			name:        "inspect",
+			description: "inspects caught pokemon",
+			callback:    commandInspect,
+		},
 	}
 }
 
 type config struct {
+	pokedex          map[string]pokeapi.Pokemon
 	pokeapiClient    pokeapi.Client
 	nextLocationsURL *string
 	prevLocationsURL *string
